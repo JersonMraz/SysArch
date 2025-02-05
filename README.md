@@ -1,3 +1,3 @@
-# THIS IS A README FILE
+# System Architecture Project
 
 This repository is only for SYSTEM ARCHITECTURE Project
