@@ -3,6 +3,7 @@
 
     $registerStatus = '';
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $idno = isset($_POST["idno"]) ? mysqli_real_escape_string($conn, $_POST["idno"]) : '';
         $lastname = isset($_POST["lastname"]) ? mysqli_real_escape_string($conn, $_POST["lastname"]) : '';
         $firstname = isset($_POST["firstname"]) ? mysqli_real_escape_string($conn, $_POST["firstname"]) : '';
         $middlename = isset($_POST["middlename"]) ? mysqli_real_escape_string($conn, $_POST["middlename"]) : '';
@@ -13,7 +14,7 @@
         $password = isset($_POST["password"]) ? mysqli_real_escape_string($conn, $_POST["password"]) : '';
         $confirmpass = isset($_POST["confirmPass"]) ? mysqli_real_escape_string($conn, $_POST["confirmPass"]) : '';
 
-        $query = "INSERT INTO users(lastname, firstname, middlename, email, course, yearLvl, username, password) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO users(idno, lastname, firstname, midname, email, course, yearlvl, username, password) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         if (empty($lastname) || empty($firstname) || empty($email) || empty($course) || empty($yearLvl) || empty($username) || empty($password) || empty($confirmpass)) {
             $registerStatus = 'NoData';
@@ -26,7 +27,7 @@
         }
         else {
             $stmt = $conn->prepare($query);
-            $stmt->bind_param("sssssiss", $lastname, $firstname, $middlename, $email, $course, $yearLvl, $username, $confirmpass);
+            $stmt->bind_param("isssssiss", $idno, $lastname, $firstname, $middlename, $email, $course, $yearLvl, $username, $confirmpass);
             $stmt->execute();
             $registerStatus = 'success';
             $stmt->close();
@@ -38,7 +39,6 @@
 <html>
     <head>
         <link rel="stylesheet" href="w3.css">
-        <link rel="stylesheet" href="style.css">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <title>Registration</title>
         <style>
@@ -79,6 +79,9 @@
                 width: 90%;
                 margin-bottom: 16px;
             }
+            form .personal-information .Idno {
+                width: 45%;
+            }
         </style>
     </head>
     <body>
@@ -90,6 +93,7 @@
             <form class="w3-container w3-padding-large" action="register.php" method="POST">
                 <div class="w3-container personal-information w3-padding-16 w3-border-bottom">
                     <p class="w3-large persIn">Personal Information</p>
+                    <input class="w3-input w3-border-blue Idno" type="text" id="idno" name="idno" placeholder="IDNO">
                     <div class="w3-half">
                         <input class="w3-input w3-border-blue" type="text" id="lastname" name="lastname" placeholder="Lastname">
                         <input class="w3-input w3-border-blue" type="text" id="middlename" name="middlename" placeholder="Middlename">

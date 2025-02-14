@@ -8,7 +8,7 @@
         $username = mysqli_real_escape_string($conn, $_POST["username"]);
         $password = mysqli_real_escape_string($conn, $_POST["password"]);
 
-        $query = "SELECT userId, username, password FROM users WHERE username = '$username'";
+        $query = "SELECT id, username, password FROM users WHERE username = '$username'";
         $result = mysqli_query($conn, $query);
 
         if(empty($username) || empty($password)) {
@@ -20,7 +20,7 @@
 
             if($user && $password === $user['password']) {
                 $loginStatus = 'success';
-                $_SESSION['id'] = $user['userId'];
+                $_SESSION['id'] = $user['id'];
             } else {
                 $loginStatus = 'failed';
             }
@@ -35,41 +35,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="w3.css">
+    <link rel="stylesheet" href="navbar.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <title>System Architecture</title>
+    <title>CCS Sit-in Monitoring</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        html, body {
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-        main {
-            text-align: center;
-            margin-top: 10%;
-        }
-        nav {
-            display: flex;
-            width: 100%;
-            height: 5vh;
-            align-items: center;
-        }
-        nav .logo {
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            font-weight: bold;
-            font-size: 2em;
-            margin-left: 10%;
-        }
-        nav .items {
-            font-size: 1.2em;
-            margin-right: 8%;
-            font-weight: 500;
-        }
         .w3-modal-content {
             width: 30%;
             border-radius: 8px;
@@ -87,16 +56,12 @@
 <body>
     <nav class="w3-border-bottom">
         <div class="w3-container logo">
-            <p>SysArch</p>
         </div>
         <div class="w3-container w3-bar items">
-            <a href="register.php" class="w3-bar-item w3-button w3-right">Register</a>
-            <a onclick="document.getElementById('login').style.display='block'" class="w3-bar-item w3-button w3-right">Login</a>
+            <a href="register.php" class="w3-bar-item w3-button w3-right w3-hover-blue">Register</a>
+            <a onclick="document.getElementById('login').style.display='block'" class="w3-bar-item w3-button w3-right w3-hover-blue">Login</a>
         </div>
     </nav>
-    <main>
-        <h1>Welcome to CCS Sit in Monitoring System</h1>
-    </main>
     <!-- Login Modal -->
     <div id="login" class="w3-modal">
         <div class="w3-modal-content w3-animate-top w3-card">
